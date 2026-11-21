@@ -1,0 +1,70 @@
+{
+  "benchmark": {
+    "email": "user50000@example.com",
+    "repetitions": 20,
+    "warmup": 3,
+    "speedup": 22.178069714286643,
+    "table1": {
+      "table": "TABLE1",
+      "matchedRows": 1,
+      "medianMs": 13.647375,
+      "averageMs": 13.673929249999997,
+      "minMs": 13.229292,
+      "maxMs": 14.15725,
+      "samplesMs": [
+        14.15725,
+        13.489625,
+        13.507542,
+        13.974,
+        13.702542,
+        13.61575,
+        13.690291,
+        13.607959,
+        13.737209,
+        13.670625,
+        13.894375,
+        13.510583,
+        13.624125,
+        13.735,
+        13.979167,
+        13.601833,
+        13.889917,
+        13.431042,
+        13.430458,
+        13.229292
+      ],
+      "explainAnalyze": "-> Filter: (Usertable1.email = 'user50000@example.com')  (cost=10102 rows=9982) (actual time=8.51..17 rows=1 loops=1)\n    -> Table scan on Usertable1  (cost=10102 rows=99818) (actual time=0.00867..11.4 rows=100000 loops=1)\n"
+    },
+    "table2": {
+      "table": "TABLE2",
+      "matchedRows": 1,
+      "medianMs": 0.6153545,
+      "averageMs": 0.6744522,
+      "minMs": 0.518459,
+      "maxMs": 1.042583,
+      "samplesMs": [
+        0.583833,
+        0.518459,
+        0.785334,
+        0.934167,
+        0.689958,
+        0.585083,
+        0.709292,
+        0.542333,
+        0.641292,
+        0.570167,
+        0.727375,
+        0.566542,
+        0.603709,
+        0.563875,
+        1.042583,
+        0.817666,
+        0.585459,
+        0.526625,
+        0.868292,
+        0.627
+      ],
+      "explainAnalyze": "-> Index lookup on Usertable2 using idx_usertable2_email (email='user50000@example.com')  (cost=0.35 rows=1) (actual time=0.00325..0.00358 rows=1 loops=1)\n"
+    }
+  }
+}

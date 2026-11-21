@@ -1,0 +1,29 @@
+### 1. Insert identical data into both tables (replaces previous experiment data)
+POST http://localhost:8080/graphql
+Content-Type: application/json
+
+{"query":"mutation { seedUsers(rowCount: 100000) { rowsPerTable } }"}
+
+### 2. Search without an email index
+POST http://localhost:8080/graphql
+Content-Type: application/json
+
+{"query":"{ search(table: TABLE1, email: \"user50000@example.com\") { table elapsedMs users { id name email age } } }"}
+
+### 3. Search with an email index
+POST http://localhost:8080/graphql
+Content-Type: application/json
+
+{"query":"{ search(table: TABLE2, email: \"user50000@example.com\") { table elapsedMs users { id name email age } } }"}
+
+### 4. Compare repeated measurements and actual plans
+POST http://localhost:8080/graphql
+Content-Type: application/json
+
+{"query":"{ benchmark(email: \"user50000@example.com\", repetitions: 20, warmup: 3) { email warmup repetitions speedup table1 { table matchedRows averageMs medianMs minMs maxMs samplesMs explainAnalyze } table2 { table matchedRows averageMs medianMs minMs maxMs samplesMs explainAnalyze } } }"}
+
+### 5. A nonexistent email: both queries return no users
+POST http://localhost:8080/graphql
+Content-Type: application/json
+
+{"query":"{ benchmark(email: \"missing@example.com\") { speedup table1 { matchedRows medianMs explainAnalyze } table2 { matchedRows medianMs explainAnalyze } } }"}

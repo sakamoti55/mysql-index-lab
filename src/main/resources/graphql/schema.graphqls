@@ -1,0 +1,46 @@
+enum UserTable { TABLE1 TABLE2 }
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    age: Int!
+}
+
+type SeedResult { rowsPerTable: Int! }
+
+type SearchResult {
+    table: UserTable!
+    users: [User!]!
+    elapsedMs: Float!
+}
+
+type TableBenchmark {
+    table: UserTable!
+    matchedRows: Int!
+    samplesMs: [Float!]!
+    averageMs: Float!
+    medianMs: Float!
+    minMs: Float!
+    maxMs: Float!
+    explainAnalyze: String!
+}
+
+type BenchmarkResult {
+    email: String!
+    warmup: Int!
+    repetitions: Int!
+    table1: TableBenchmark!
+    table2: TableBenchmark!
+    speedup: Float!
+}
+
+type Query {
+    search(table: UserTable!, email: String!): SearchResult!
+    benchmark(email: String!, repetitions: Int! = 20, warmup: Int! = 3): BenchmarkResult!
+}
+
+type Mutation {
+    "Replaces all rows in both experiment tables with identical generated data (1..1,000,000)."
+    seedUsers(rowCount: Int! = 100000): SeedResult!
+}
